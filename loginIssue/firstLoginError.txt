@@ -1,0 +1,5 @@
+After first user creation, is not possible to login due to cerfiticate error.
+
+Solution:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1789604
