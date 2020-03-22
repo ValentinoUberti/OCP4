@@ -1,0 +1,5 @@
+In DeploymentConfig 
+spec-> template -> metadata
+
+annotations:
+  sidecar.istio.io/inject: "true"
