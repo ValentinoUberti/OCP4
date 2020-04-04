@@ -1,0 +1,132 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  annotations:
+    kubevirt.io/latest-observed-api-version: v1alpha3
+    kubevirt.io/storage-observed-api-version: v1alpha3
+    name.os.template.kubevirt.io/win2k19: Microsoft Windows Server 2019
+  selfLink: /apis/kubevirt.io/v1alpha3/namespaces/windows/virtualmachines/mysuperwin
+  resourceVersion: '6558132'
+  name: mysuperwin
+  uid: ded3c04c-0096-4856-bf0a-b22ffd1698aa
+  creationTimestamp: '2020-04-04T08:24:04Z'
+  generation: 18
+  namespace: windows
+  finalizers:
+    - k8s.v1.cni.cncf.io/kubeMacPool
+  labels:
+    app: mysuperwin
+    flavor.template.kubevirt.io/large: 'true'
+    os.template.kubevirt.io/win2k19: 'true'
+    vm.kubevirt.io/template: win2k12r2-server-large-v0.7.0
+    vm.kubevirt.io/template-namespace: openshift
+    vm.kubevirt.io/template.revision: '1'
+    vm.kubevirt.io/template.version: v0.8.2
+    workload.template.kubevirt.io/server: 'true'
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: mysuperwin-disk0
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteMany
+          dataSource: null
+          resources:
+            requests:
+              storage: 30Gi
+          storageClassName: ocs-storagecluster-cephfs
+          volumeMode: Filesystem
+        source:
+          blank: {}
+      status: {}
+    - metadata:
+        name: mysuperwin-cd-drive-2
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 10Gi
+          storageClassName: ocs-storagecluster-cephfs
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://software-download.microsoft.com/download/pr/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso
+  running: false
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: mysuperwin
+        kubevirt.io/size: large
+        vm.kubevirt.io/name: mysuperwin
+    spec:
+      domain:
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+          utc: {}
+        cpu:
+          cores: 1
+          sockets: 2
+          threads: 1
+        devices:
+          disks:
+            - bootOrder: 1
+              disk:
+                bus: virtio
+              name: disk0
+            - bootOrder: 2
+              cdrom:
+                bus: sata
+              name: cd-drive-1
+            - bootOrder: 3
+              cdrom:
+                bus: sata
+              name: cd-drive-2
+          interfaces:
+            - bootOrder: 4
+              macAddress: '02:be:48:00:00:0b'
+              masquerade: {}
+              model: virtio
+              name: nic0
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            relaxed: {}
+            spinlocks:
+              spinlocks: 8191
+            vapic: {}
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8Gi
+      evictionStrategy: LiveMigrate
+      hostname: mysuperwin
+      networks:
+        - name: nic0
+          pod: {}
+      terminationGracePeriodSeconds: 0
+      volumes:
+        - dataVolume:
+            name: mysuperwin-disk0
+          name: disk0
+        - containerDisk:
+            image: kubevirt/virtio-container-disk
+          name: cd-drive-1
+        - dataVolume:
+            name: mysuperwin-cd-drive-2
+          name: cd-drive-2
+status: {}
