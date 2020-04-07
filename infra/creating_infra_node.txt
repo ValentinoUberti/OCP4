@@ -1,0 +1,24 @@
+# oc edit node worker-x.ocp.example.net
+Remove worker label
+add label:
+
+node-role.kubernetes.io/infra: ""
+
+
+#Edit the ingress controller 
+oc edit ingresscontroller default -n openshift-ingress-operator -o yaml
+
+spec:
+  nodePlacement:
+      nodeSelector:
+        matchLabels:
+          node-role.kubernetes.io/infra: ""
+  replicas: 3
+  
+#Move the registry pods on infra:
+
+#oc edit config cluster
+
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/infra: ""
