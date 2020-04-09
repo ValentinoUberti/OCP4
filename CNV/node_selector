@@ -1,1 +1,4 @@
-kubectl patch ds/virt-handler -n kubevirt -p '{"spec": {"template": {"spec": {"nodeSelector": {"region": "primary"}}}}}'
+oc label node worker-6.ocp.example.net region=cnv
+oc patch ds/kubevirt-node-labeller -n openshift-cnv -p '{"spec": {"template": {"spec": {"nodeSelector": {"region": "cnv"}}}}}'
+
+
