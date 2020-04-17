@@ -5,12 +5,7 @@ metadata:
     kubevirt.io/latest-observed-api-version: v1alpha3
     kubevirt.io/storage-observed-api-version: v1alpha3
     name.os.template.kubevirt.io/win2k19: Microsoft Windows Server 2019
-  selfLink: /apis/kubevirt.io/v1alpha3/namespaces/windows/virtualmachines/mysuperwin
-  resourceVersion: '6558132'
   name: mysuperwin
-  uid: ded3c04c-0096-4856-bf0a-b22ffd1698aa
-  creationTimestamp: '2020-04-04T08:24:04Z'
-  generation: 18
   namespace: windows
   finalizers:
     - k8s.v1.cni.cncf.io/kubeMacPool
