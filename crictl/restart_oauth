@@ -1,0 +1,1 @@
+ crictl ps | grep oauth-openshift | awk '{ print $1}' | xargs -n1 crictl rm -f
