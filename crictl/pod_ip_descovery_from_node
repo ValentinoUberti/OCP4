@@ -1,0 +1,1 @@
+ crictl ps | awk '{print $1}' | grep -vi container | xargs -n1 crictl inspect  | grep -i cri-o.ip
