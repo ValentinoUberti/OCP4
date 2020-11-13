@@ -1,3 +1,5 @@
+https://tinyexplosions.com/posts/infra-nodes/
+
 # oc edit node worker-x.ocp.example.net
 Remove worker label
 add label:
