@@ -1,0 +1,39 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: ocp-b7vkv-workercnv-0
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ocp-b7vkv
+      machine.openshift.io/cluster-api-machineset: ocp-b7vkv-workercnv-0
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ocp-b7vkv
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: ocp-b7vkv-workercnv-0
+    spec:
+      providerSpec:
+        value:
+          apiVersion: ovirtproviderconfig.machine.openshift.io/v1beta1
+          cluster_id: 97a1d212-1aa3-11eb-80e3-00163e4636c3
+          cpu:
+            cores: 16
+            sockets: 1
+            threads: 1
+          credentialsSecret:
+            name: ovirt-credentials
+          id: ""
+          kind: OvirtMachineProviderSpec
+          memory_mb: 65536
+          name: ""
+          os_disk:
+            size_gb: 120
+          template_name: ocp-b7vkv-rhcos
+          type: high_performance 
+          userDataSecret:
+            name: worker-user-data
