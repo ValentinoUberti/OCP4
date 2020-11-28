@@ -1,0 +1,1 @@
+virtctl expose virtualmachine vm1 --name vm1-rdp --port 32062 --target-port 3389 --type NodePort

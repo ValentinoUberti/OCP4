@@ -1,0 +1,3 @@
+oc get pods --all-namespaces | grep -vi running | awk '{print $1,$2}' | xargs -n 2 bash -c 'oc delete pod $1 -n $0'
+
+
