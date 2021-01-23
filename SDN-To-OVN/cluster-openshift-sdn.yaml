@@ -1,0 +1,53 @@
+apiVersion: config.openshift.io/v1
+kind: Network
+metadata:
+  creationTimestamp: "2021-01-19T07:40:36Z"
+  generation: 2
+  managedFields:
+  - apiVersion: config.openshift.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        .: {}
+        f:clusterNetwork: {}
+        f:externalIP:
+          .: {}
+          f:policy: {}
+        f:networkType: {}
+        f:serviceNetwork: {}
+      f:status: {}
+    manager: cluster-bootstrap
+    operation: Update
+    time: "2021-01-19T07:40:36Z"
+  - apiVersion: config.openshift.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:clusterNetwork: {}
+        f:clusterNetworkMTU: {}
+        f:networkType: {}
+        f:serviceNetwork: {}
+    manager: cluster-network-operator
+    operation: Update
+    time: "2021-01-19T07:47:01Z"
+  name: cluster
+  resourceVersion: "3251"
+  selfLink: /apis/config.openshift.io/v1/networks/cluster
+  uid: 7ed5f034-5e72-486c-8cca-0b65fcb7de08
+spec:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  externalIP:
+    policy: {}
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+status:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  clusterNetworkMTU: 1450
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16

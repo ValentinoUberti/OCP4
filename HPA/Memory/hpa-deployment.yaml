@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2beta2 
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-resource-metrics-memory-deployment 
+  namespace: test-hpa-memory
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1 
+    kind: Deployment 
+    name: quarkus-jvm 
+  minReplicas: 1 
+  maxReplicas: 10 
+  metrics: 
+  - type: Resource
+    resource:
+      name: memory 
+      target:
+        type: AverageValue 
+        averageValue: 500Mi 
