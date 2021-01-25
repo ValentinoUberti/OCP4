@@ -91,3 +91,20 @@ oc apply -f cluster-monitoring-cm.yaml
 # Logging
 
 https://docs.openshift.com/container-platform/4.6/logging/cluster-logging-deploying.html
+
+# Adding tolerations for infra nodes
+https://docs.openshift.com/container-platform/4.6/logging/config/cluster-logging-tolerations.html
+
+```
+      nodeSelector: 
+          node-role.kubernetes.io/infra: ''
+      tolerations:
+      - effect: NoSchedule 
+        key: node-role.kubernetes.io/infra 
+        operator: Exists
+        tolerationSeconds: 6000
+```
+- spec->curation->curator->
+- spec->logStore->elasticsearch->
+- spec->visualization->kibana->
+
