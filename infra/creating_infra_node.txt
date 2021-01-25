@@ -4,6 +4,8 @@ https://tinyexplosions.com/posts/infra-nodes/
 Remove worker label
 add label:
 
+Spec -> Template -> Spec -> Metadata -> Label
+
 node-role.kubernetes.io/infra: ""
 
 
