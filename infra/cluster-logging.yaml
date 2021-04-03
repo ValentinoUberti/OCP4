@@ -38,7 +38,7 @@ items:
          
         storage:
           size: 200G
-          storageClassName: ocs-storagecluster-cephfs
+          storageClassName: managed-premium
         resources:
           limits:
             cpu: 500m
