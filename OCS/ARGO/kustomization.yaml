@@ -1,0 +1,5 @@
+resources:
+- create-ocs-namespace.yaml
+- create-ocs-operator-group.yaml
+- ocs-sub.yaml
+#- storagecluster.yaml
