@@ -1,0 +1,1 @@
+oc get sc -o jsonpath='{.items[?(@.metadata.name!="ovirt-csi-sc")].metadata.name}' | xargs oc delete sc 
