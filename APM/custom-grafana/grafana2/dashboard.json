@@ -19,6 +19,10 @@
     "links": [],
     "panels": [
       {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
         "datasource": null,
         "fieldConfig": {
           "defaults": {
@@ -43,77 +47,16 @@
           },
           "overrides": []
         },
-        "gridPos": {
-          "h": 7,
-          "w": 5,
-          "x": 0,
-          "y": 0
-        },
-        "id": 4,
-        "options": {
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
-          },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": false
-        },
-        "pluginVersion": "7.3.10",
-        "repeat": null,
-        "targets": [
-          {
-            "expr": "version{namespace=\"ns1\"}",
-            "format": "table",
-            "instant": true,
-            "interval": "",
-            "legendFormat": "",
-            "refId": "A"
-          }
-        ],
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "Version (Custom metric)",
-        "type": "gauge"
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {},
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "gridPos": {
-          "h": 7,
-          "w": 8,
-          "x": 5,
+          "h": 8,
+          "w": 13,
+          "x": 0,
           "y": 0
         },
         "hiddenSeries": false,
-        "id": 2,
+        "id": 12,
         "legend": {
           "avg": false,
           "current": false,
@@ -132,16 +75,15 @@
         "percentage": false,
         "pluginVersion": "7.3.10",
         "pointradius": 2,
-        "points": false,
+        "points": true,
         "renderer": "flot",
         "seriesOverrides": [],
         "spaceLength": 10,
-        "stack": false,
+        "stack": true,
         "steppedLine": false,
         "targets": [
           {
-            "expr": "sum(rate(http_requests_total{namespace=\"ns1\"}[1m]))\n",
-            "instant": false,
+            "expr": "http_server_requests_seconds_max{exception=\"None\",method=\"GET\",outcome=\"SUCCESS\",status=\"200\",uri=\"/metrics\",}",
             "interval": "",
             "legendFormat": "",
             "refId": "A"
@@ -151,7 +93,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Project NS1 - http_requests_total_per_minute (Custom metric)",
+        "title": "http_server_requests_seconds_max",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -298,6 +240,233 @@
         }
       },
       {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "mappings": [],
+            "max": 50,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 10
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 9,
+          "x": 13,
+          "y": 7
+        },
+        "id": 10,
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "7.3.10",
+        "targets": [
+          {
+            "expr": "count(kube_pod_info{namespace=\"ns1\"}) by (namespace)",
+            "format": "table",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "Pod Replicas",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Pod replicas count",
+        "type": "gauge"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 5,
+          "x": 0,
+          "y": 8
+        },
+        "id": 4,
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": false
+        },
+        "pluginVersion": "7.3.10",
+        "repeat": null,
+        "targets": [
+          {
+            "expr": "version{namespace=\"ns1\"}",
+            "format": "table",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Version (Custom metric)",
+        "type": "gauge"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 5,
+          "y": 8
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.3.10",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{namespace=\"ns1\"}[1m]))\n",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Project NS1 - http_requests_total_per_minute (Custom metric)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
         "aliasColors": {},
         "bars": false,
         "dashLength": 10,
@@ -315,7 +484,7 @@
           "h": 7,
           "w": 13,
           "x": 0,
-          "y": 7
+          "y": 15
         },
         "hiddenSeries": false,
         "id": 8,
@@ -391,63 +560,6 @@
           "align": false,
           "alignLevel": null
         }
-      },
-      {
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {},
-            "mappings": [],
-            "max": 50,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 10
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 7,
-          "w": 9,
-          "x": 13,
-          "y": 7
-        },
-        "id": 10,
-        "options": {
-          "reduceOptions": {
-            "calcs": [
-              "mean"
-            ],
-            "fields": "",
-            "values": false
-          },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true
-        },
-        "pluginVersion": "7.3.10",
-        "targets": [
-          {
-            "expr": "count(kube_pod_info{namespace=\"ns1\"}) by (namespace)",
-            "format": "table",
-            "instant": true,
-            "interval": "",
-            "legendFormat": "Pod Replicas",
-            "refId": "A"
-          }
-        ],
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "Pod replicas count",
-        "type": "gauge"
       }
     ],
     "schemaVersion": 26,
@@ -457,12 +569,12 @@
       "list": []
     },
     "time": {
-      "from": "now-15m",
+      "from": "now-5m",
       "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Custom Dashboard",
     "uid": "SY_YHTrGz",
-    "version": 1
+    "version": 2
   }
