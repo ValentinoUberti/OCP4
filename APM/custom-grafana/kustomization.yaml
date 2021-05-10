@@ -1,0 +1,7 @@
+resources:
+- custom-project.yaml
+- grafana_operator_group.yaml
+- grafana_operator_subscription.yaml
+
+
+
