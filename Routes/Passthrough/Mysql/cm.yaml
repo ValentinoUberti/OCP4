@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  tls.cnf: |-
+    [mysqld]
+    ssl-ca=myCA.pem
+    ssl-cert=mysql.crt
+    ssl-key=mysql.key
+    require_secure_transport=ON
