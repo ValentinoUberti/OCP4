@@ -5,7 +5,7 @@ metadata:
 spec:
   parallelism: 1    
   completions: 1    
-  activeDeadlineSeconds: 120 
+  activeDeadlineSeconds: 3600 
   backoffLimit: 60   
   template:         
     metadata:
@@ -21,7 +21,7 @@ spec:
           value: {{ .Values.secret.secretkey }}
         - name: BUCKET_NAME
           value: {{ .Values.bucketName }}
-        command: ["/bin/sh","-c"]
+        command: ["/bin/bash","-c"]
         args:
         - cd /home;
           curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc;
