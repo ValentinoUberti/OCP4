@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    include.release.openshift.io/self-managed-high-availability: 'true'
+    olm.providedAPIs: Tenant.v2.minio.min.io
+  selfLink: >-
+    /apis/operators.coreos.com/v1/namespaces/openshift-operators/operatorgroups/global-operators
+  name: global-operators
+  namespace: openshift-operators
+spec: {}
