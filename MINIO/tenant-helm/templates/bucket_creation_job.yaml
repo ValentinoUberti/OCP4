@@ -23,7 +23,8 @@ spec:
           value: {{ .Values.bucketName }}
         command: ["/bin/bash","-c"]
         args:
-        - cd /home;
+        - set -e;
+          cd /home;
           curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc;
           chmod +x /home/mc;
           export AK=$(echo $ACCESS_KEY | base64 -d);
