@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    olm.owner: minio-operator.v4.0.2
+    olm.owner.kind: ClusterServiceVersion
+    olm.owner.namespace: openshift-operators
+    operators.coreos.com/minio-operator.openshift-operators: ""
+  name: minio-operator-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: minio-operator-crb
+subjects:
+- kind: ServiceAccount
+  name: minio-operator
+  namespace: openshift-operators
