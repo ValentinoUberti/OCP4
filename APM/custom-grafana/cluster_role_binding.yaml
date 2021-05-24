@@ -1,0 +1,28 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2021-04-28T09:43:18Z"
+  managedFields:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:roleRef:
+        f:apiGroup: {}
+        f:kind: {}
+        f:name: {}
+      f:subjects: {}
+    manager: oc
+    operation: Update
+    time: "2021-04-28T09:43:18Z"
+  name: cluster-monitoring-view
+  resourceVersion: "3442540"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/cluster-monitoring-view
+  uid: 60a49a3c-cf16-406d-9c5a-ba07857f24bb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-monitoring-view
+subjects:
+- kind: ServiceAccount
+  name: grafana-serviceaccount
+  namespace: custom-grafana
