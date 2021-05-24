@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-guestbook-app-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: minio-test
+  project: default
+  source:
+    path: MINIO/tenant
+    repoURL: https://github.com/ValentinoUberti/OCP4
+    targetRevision: HEAD
