@@ -13,4 +13,10 @@ spec:
     path: MINIO/operator
     repoURL: https://github.com/ValentinoUberti/OCP4
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
+
     
