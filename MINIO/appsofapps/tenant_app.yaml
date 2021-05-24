@@ -8,6 +8,7 @@ metadata:
 spec:
   destination:
     namespace: minio-test
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: MINIO/tenant
