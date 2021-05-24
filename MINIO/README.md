@@ -1,6 +1,8 @@
 # Configuration 
 
 https://github.com/minio/operator/blob/master/README.md
+https://raw.githubusercontent.com/minio/operator/master/examples/tenant.yaml
+
 
 ```
 cat <<EOF >minio_sc.yaml 
