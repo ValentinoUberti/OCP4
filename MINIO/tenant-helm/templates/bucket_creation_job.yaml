@@ -18,9 +18,10 @@ spec:
         - ACCESS_KEY: {{ .Values.secret.accesskey }}
         - ACCESS_SECRET: {{ .Values.secret.secretkey }}
         - BUCKET_NAME: {{ .Values.bucketName }}
-        command:
-        - "curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc"
-        - "chmod +x ./mc"
-        - "./mc alias set minio http://minio ${ACCESS_KEY} ${ACCESS_SECRET}"
-        - "./mc mb minio/${BUCKET_NAME}"
+        command: ["/bin/sh","-c"]
+        args:
+        - curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc;
+          chmod +x ./mc;
+          ./mc alias set minio http://minio ${ACCESS_KEY} ${ACCESS_SECRET};
+          ./mc mb minio/${BUCKET_NAME};
       restartPolicy: OnFailure    
