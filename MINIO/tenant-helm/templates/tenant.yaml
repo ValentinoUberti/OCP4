@@ -1,0 +1,59 @@
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: {{ .Values.namespace }}
+spec: {}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-creds-secret
+  namespace: {{ .Values.namespace }}
+type: Opaque
+data:
+  accesskey: {{ .Values.secret.accesskey }} # base 64 encoded "minio" (echo -n 'minio' | base64)
+  secretkey: {{ .Values.secret.secretkey }} # based 64 encoded "minio123" (echo -n 'minio123' | base64)
+---
+## Secret to be used for MinIO Console
+apiVersion: v1
+kind: Secret
+metadata:
+  name: console-secret
+  namespace: {{ .Values.namespace }}
+type: Opaque
+data:
+  ## Passphrase to encrypt jwt payload, base64 encoded (echo -n 'SECRET' | base64)
+  CONSOLE_PBKDF_PASSPHRASE: {{ .Values.console.CONSOLE_PBKDF_PASSPHRASE }}
+  ## Salt to encrypt jwt payload, base64 encoded (echo -n 'SECRET' | base64)
+  CONSOLE_PBKDF_SALT:  {{ .Values.console.CONSOLE_PBKDF_SALT }}
+  ## MinIO User Access Key (used for Console Login), base64 encoded (echo -n 'YOURCONSOLEACCESS' | base64)
+  CONSOLE_ACCESS_KEY:  {{ .Values.console.CONSOLE_ACCESS_KEY }}
+  ## MinIO User Secret Key (used for Console Login), base64 encoded (echo -n 'YOURCONSOLESECRET' | base64)
+  CONSOLE_SECRET_KEY:  {{ .Values.console.CONSOLE_SECRET_KEY }}
+---
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  name: minio
+  namespace: {{ .Values.namespace }}
+spec:
+  console:
+    consoleSecret:
+      name: console-secret
+    replicas: 1
+  credsSecret:
+    name: minio-creds-secret
+  pools:
+    - servers: 1
+      volumeClaimTemplate:
+        apiVersion: v1
+        kind: persistentvolumeclaims
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ .Values.storage.request }}
+          storageClassName: {{ .Values.storageClassName }}
+      volumesPerServer: 4
+  requestAutoCert: false
