@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: MINIO/tenant
+    path: MINIO/tenant-helm
     repoURL: https://github.com/ValentinoUberti/OCP4
     targetRevision: HEAD
   syncPolicy:
