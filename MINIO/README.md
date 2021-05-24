@@ -16,3 +16,12 @@ volumeBindingMode: WaitForFirstConsumer
 EOF
 ```  
 
+# Create a bucket from Job
+
+FROM ubi8
+curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x ./mc
+
+./mc alias set minio http://minio minio minio123
+./mc mb minio/bucket2             #accessKey #secretKey
+
