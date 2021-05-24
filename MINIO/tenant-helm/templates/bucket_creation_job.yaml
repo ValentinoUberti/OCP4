@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: bucket_creation_job
+  name: bucket-creation-job
 spec:
   parallelism: 1    
   completions: 1    
@@ -9,10 +9,10 @@ spec:
   backoffLimit: 60   
   template:         
     metadata:
-      name: bucket_creation_job
+      name: bucket-creation-job
     spec:
       containers:
-      - name: bucket_creation_job
+      - name: bucket-creation-job
         image: ubi8
         env:
         - ACCESS_KEY: {{ .Values.secret.accesskey }}
