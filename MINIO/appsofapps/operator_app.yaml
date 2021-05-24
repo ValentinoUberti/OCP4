@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: helm-guestbook-app-dev
+  name: minio-operator
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
