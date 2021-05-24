@@ -1,5 +1,5 @@
 namespace: minio-test
-secrets:
+secret:
   accesskey: bWluaW8= # base 64 encoded "minio" (echo -n 'minio' | base64)
   secretkey: bWluaW8xMjM= # based 64 encoded "minio123" (echo -n 'minio123' | base64)
 
