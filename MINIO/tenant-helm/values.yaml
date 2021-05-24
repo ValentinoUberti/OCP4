@@ -17,4 +17,4 @@ storage:
   storageClassName: ovirt-csi-sc
   request: 1Gi
 
-bucketName: testBucket
+bucketName: testbucket8
