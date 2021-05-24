@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: apps-of-apps
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: MINIO/appsofapps/
