@@ -16,17 +16,26 @@ spec:
         image: ubi8
         env:
         - name: ACCESS_KEY
-          value: {{ .Values.secret.accesskey }}
+          value: bWluaW8=
         - name: ACCESS_SECRET
-          value: {{ .Values.secret.secretkey }}
+          value: bWluaW8xMjM=
         - name: BUCKET_NAME
-          value: {{ .Values.bucketName }}
+          value: testbucket2
         command: ["/bin/sh","-c"]
         args:
         - cd /home;
           curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc;
           chmod +x /home/mc;
-          ./mc  --config-dir=/home/ alias set minio http://minio $(echo $ACCESS_KEY | base64 -d) $( echo $ACCESS_SECRET | base64 -d);
+          export AK=$(echo $ACCESS_KEY | base64 -d);
+          export AS=$(echo $ACCESS_SECRET | base64 -d);
+          ./mc  --config-dir=/home/ alias set minio http://minio $AK $AS;
           ./mc  --config-dir=/home/ mb minio/$BUCKET_NAME;
+        volumeMounts:
+        - name: tmp
+          mountPath: /home
 
-      restartPolicy: OnFailure    
+
+      restartPolicy: OnFailure
+      volumes:
+        - name: tmp
+          emptyDir: {}
