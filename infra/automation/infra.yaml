@@ -1,0 +1,27 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  generation: 1
+  labels:
+    machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: ocp-8wcjz-worker-1
+  namespace: openshift-machine-api
+  
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+      machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-1
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-1
+    spec:
+      metadata: {}
+      

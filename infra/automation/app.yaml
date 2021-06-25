@@ -1,0 +1,126 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  creationTimestamp: "2021-06-24T19:21:54Z"
+  generation: 2
+  managedFields:
+  - apiVersion: argoproj.io/v1alpha1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:health:
+          f:status: {}
+        f:reconciledAt: {}
+        f:resources: {}
+        f:sourceType: {}
+        f:sync:
+          f:comparedTo:
+            f:destination:
+              f:namespace: {}
+              f:server: {}
+            f:source:
+              f:path: {}
+              f:repoURL: {}
+              f:targetRevision: {}
+          f:revision: {}
+          f:status: {}
+    manager: argocd-application-controller
+    operation: Update
+    time: "2021-06-24T19:21:54Z"
+  - apiVersion: argoproj.io/v1alpha1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        .: {}
+        f:destination:
+          .: {}
+          f:namespace: {}
+          f:server: {}
+        f:project: {}
+        f:source:
+          .: {}
+          f:path: {}
+          f:repoURL: {}
+          f:targetRevision: {}
+      f:status:
+        .: {}
+        f:health: {}
+        f:summary: {}
+        f:sync:
+          .: {}
+          f:comparedTo:
+            .: {}
+            f:destination: {}
+            f:source: {}
+    manager: argocd-server
+    operation: Update
+    time: "2021-06-24T19:21:54Z"
+  name: test
+  namespace: argocd
+  resourceVersion: "53103760"
+  selfLink: /apis/argoproj.io/v1alpha1/namespaces/argocd/applications/test
+  uid: dbb03993-6ad4-4f66-b492-8c61082a5ef3
+spec:
+  destination:
+    namespace: minio
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: MINIO/tenant-helm
+    repoURL: https://github.com/ValentinoUberti/OCP4
+    targetRevision: HEAD
+status:
+  health:
+    status: Missing
+  reconciledAt: "2021-06-24T19:21:54Z"
+  resources:
+  - health:
+      status: Missing
+    kind: Secret
+    name: console-secret
+    namespace: minio-test
+    status: OutOfSync
+    version: v1
+  - health:
+      status: Missing
+    kind: Secret
+    name: minio-creds-secret
+    namespace: minio-test
+    status: OutOfSync
+    version: v1
+  - group: batch
+    health:
+      status: Missing
+    kind: Job
+    name: bucket-creation-job
+    namespace: minio
+    status: OutOfSync
+    version: v1
+  - group: minio.min.io
+    health:
+      status: Missing
+    kind: Tenant
+    name: minio
+    namespace: minio-test
+    status: OutOfSync
+    version: v2
+  - group: project.openshift.io
+    health:
+      status: Missing
+    kind: Project
+    name: minio-test
+    status: OutOfSync
+    version: v1
+  sourceType: Helm
+  summary: {}
+  sync:
+    comparedTo:
+      destination:
+        namespace: minio
+        server: https://kubernetes.default.svc
+      source:
+        path: MINIO/tenant-helm
+        repoURL: https://github.com/ValentinoUberti/OCP4
+        targetRevision: HEAD
+    revision: 6c649a790a2a408d646135eed3cda8d17fcf5918
+    status: OutOfSync

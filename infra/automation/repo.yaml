@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  password: MTFDYXNhZnUxMQ==
+  username: VmFsZW50aW5vVWJlcnRp
+kind: Secret
+metadata:
+  annotations:
+    managed-by: argocd.argoproj.io
+  name: myrepo
+  namespace: argocd
+type: Opaque
