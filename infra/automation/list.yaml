@@ -1,0 +1,132 @@
+apiVersion: v1
+items:
+- apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
+  metadata:
+    creationTimestamp: "2021-04-22T09:22:55Z"
+    generation: 1
+    labels:
+      machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker
+    managedFields:
+    - apiVersion: machine.openshift.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:machine.openshift.io/cluster-api-cluster: {}
+            f:machine.openshift.io/cluster-api-machine-role: {}
+            f:machine.openshift.io/cluster-api-machine-type: {}
+        f:spec:
+          .: {}
+          f:replicas: {}
+          f:selector:
+            .: {}
+            f:matchLabels:
+              .: {}
+              f:machine.openshift.io/cluster-api-cluster: {}
+              f:machine.openshift.io/cluster-api-machineset: {}
+          f:template:
+            .: {}
+            f:metadata:
+              .: {}
+              f:labels:
+                .: {}
+                f:machine.openshift.io/cluster-api-cluster: {}
+                f:machine.openshift.io/cluster-api-machine-role: {}
+                f:machine.openshift.io/cluster-api-machine-type: {}
+                f:machine.openshift.io/cluster-api-machineset: {}
+            f:spec:
+              .: {}
+              f:metadata: {}
+              f:providerSpec:
+                .: {}
+                f:value:
+                  .: {}
+                  f:apiVersion: {}
+                  f:cluster_id: {}
+                  f:cpu: {}
+                  f:credentialsSecret: {}
+                  f:id: {}
+                  f:kind: {}
+                  f:memory_mb: {}
+                  f:metadata: {}
+                  f:name: {}
+                  f:os_disk: {}
+                  f:template_name: {}
+                  f:type: {}
+                  f:userDataSecret: {}
+        f:status:
+          .: {}
+          f:fullyLabeledReplicas: {}
+          f:observedGeneration: {}
+          f:replicas: {}
+      manager: cluster-bootstrap
+      operation: Update
+      time: "2021-04-22T09:22:55Z"
+    - apiVersion: machine.openshift.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:availableReplicas: {}
+          f:fullyLabeledReplicas: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+      manager: machineset-controller
+      operation: Update
+      time: "2021-04-22T09:37:28Z"
+    name: ocp-8wcjz-worker-0
+    namespace: openshift-machine-api
+    resourceVersion: "24605257"
+    selfLink: /apis/machine.openshift.io/v1beta1/namespaces/openshift-machine-api/machinesets/ocp-8wcjz-worker-0
+    uid: 22487538-b698-4236-9f2c-54c1eb036845
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+        machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-0
+    template:
+      metadata:
+        labels:
+          machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+          machine.openshift.io/cluster-api-machine-role: worker
+          machine.openshift.io/cluster-api-machine-type: worker
+          machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-0
+      spec:
+        metadata: {}
+        providerSpec:
+          value:
+            apiVersion: ovirtproviderconfig.machine.openshift.io/v1beta1
+            cluster_id: ecdd6108-81cb-11eb-a685-005056adf119
+            cpu:
+              cores: 4
+              sockets: 1
+              threads: 1
+            credentialsSecret:
+              name: ovirt-credentials
+            id: ""
+            kind: OvirtMachineProviderSpec
+            memory_mb: 16348
+            metadata:
+              creationTimestamp: null
+            name: ""
+            os_disk:
+              size_gb: 120
+            template_name: ocp-8wcjz-rhcos
+            type: server
+            userDataSecret:
+              name: worker-user-data
+  status:
+    availableReplicas: 3
+    fullyLabeledReplicas: 3
+    observedGeneration: 1
+    readyReplicas: 3
+    replicas: 3
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

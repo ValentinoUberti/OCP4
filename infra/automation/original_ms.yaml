@@ -1,0 +1,48 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  creationTimestamp: "2021-04-22T09:22:55Z"
+  generation: 1
+  labels:
+    machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+    machine.openshift.io/cluster-api-machine-role: worker
+    machine.openshift.io/cluster-api-machine-type: worker
+  name: ocp-8wcjz-worker-0
+  namespace: openshift-machine-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+      machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-0
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: ocp-8wcjz-worker-0
+    spec:
+      metadata: {}
+      providerSpec:
+        value:
+          apiVersion: ovirtproviderconfig.machine.openshift.io/v1beta1
+          cluster_id: ecdd6108-81cb-11eb-a685-005056adf119
+          cpu:
+            cores: 4
+            sockets: 1
+            threads: 1
+          credentialsSecret:
+            name: ovirt-credentials
+          id: ""
+          kind: OvirtMachineProviderSpec
+          memory_mb: 16348
+          metadata:
+            creationTimestamp: null
+          name: ""
+          os_disk:
+            size_gb: 120
+          template_name: ocp-8wcjz-rhcos
+          type: server
+          userDataSecret:
+            name: worker-user-data
