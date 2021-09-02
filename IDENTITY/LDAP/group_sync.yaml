@@ -1,0 +1,40 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: ldap-groupsync
+spec:
+  schedule: "*/5 * * * *"
+  providers:
+  - ldap:
+      whitelist:
+      - cn=ocp,cn=groups,cn=accounts,dc=lab,dc=seeweb
+      credentialsSecret:
+        name: ldap-group-sync
+        namespace: group-sync-operator
+      caSecret:
+        name: idm-ca
+        namespace: group-sync-operator
+        key: ca.crt
+      insecure: false
+      rfc2307:
+        groupMembershipAttributes:
+        - member
+        groupNameAttributes:
+        - cn
+        groupUIDAttribute: dn
+        groupsQuery:
+          baseDN: cn=groups,cn=accounts,dc=lab,dc=seeweb
+          derefAliases: never
+          filter: (objectClass=groupofnames)
+          scope: sub
+        tolerateMemberNotFoundErrors: true
+        tolerateMemberOutOfScopeErrors: true
+        userNameAttributes:
+        - cn
+        userUIDAttribute: dn
+        usersQuery:
+          baseDN: cn=users,cn=accounts,dc=lab,dc=seeweb
+          derefAliases: never
+          scope: sub
+      url: ldaps://idm.lab.seeweb
+    name: ldap
