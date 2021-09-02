@@ -1,0 +1,37 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: Machine
+metadata:
+  
+  labels:
+    machine.openshift.io/cluster-api-cluster: ocp-8wcjz
+    machine.openshift.io/cluster-api-machine-role: master
+    machine.openshift.io/cluster-api-machine-type: master
+ 
+  name: ocp-8wcjz-master-new-0
+  namespace: openshift-machine-api
+ 
+spec:
+  metadata: {}
+ 
+  providerSpec:
+    value:
+      apiVersion: ovirtproviderconfig.machine.openshift.io/v1beta1
+      cluster_id: ecdd6108-81cb-11eb-a685-005056adf119
+      cpu:
+        cores: 4
+        sockets: 1
+        threads: 1
+      credentialsSecret:
+        name: ovirt-credentials
+      id: ""
+      kind: OvirtMachineProviderSpec
+      memory_mb: 16348
+      metadata:
+        creationTimestamp: null
+      name: ""
+      os_disk:
+        size_gb: 120
+      template_name: ocp-8wcjz-rhcos
+      type: high_performance
+      userDataSecret:
+        name: master-user-data
