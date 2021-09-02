@@ -20,3 +20,6 @@ oc get machineset -n openshift-machine-api -o json\
 | jq '.spec.template.spec.providerSpec.value.cpu.cores=env["CPU_CORE"]'\
 | jq '.spec.template.spec.providerSpec.value.memory_mb=env["MEMORY_MB"]'\
 | oc create -f - 
+
+#numCPUs
+#memoryMiB:q
