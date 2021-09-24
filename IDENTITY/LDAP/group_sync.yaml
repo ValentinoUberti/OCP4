@@ -30,7 +30,7 @@ spec:
         tolerateMemberNotFoundErrors: true
         tolerateMemberOutOfScopeErrors: true
         userNameAttributes:
-        - cn
+        - uid
         userUIDAttribute: dn
         usersQuery:
           baseDN: cn=users,cn=accounts,dc=lab,dc=seeweb
