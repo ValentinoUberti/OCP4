@@ -1,7 +1,11 @@
 # LDAP identityProvider
 
-oc create secret generic ldap-secret --from-literal=bindPassword=<secret> -n openshift-config 
+oc create secret generic ldap-secret --from-literal=bindPassword=<secret> -n openshift-config
+  
+
 oc create configmap ca-config-map --from-file=ca.crt=/path/to/ca -n openshift-config
+  
+ 
 
 # Groups filter
 
