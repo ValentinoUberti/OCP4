@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: example-alert
+  namespace: ns1
+  
+spec:
+  groups:
+  - name: example
+    rules:
+    - alert: Restart detected
+      expr: increase(kube_pod_container_status_restarts_total{pod=~".*example-app.*"}[1h]) > 0
+      labels:
+        application: example-app
+        severity: critical
+      annotations:
+          prefix: "Restart detected"
+          summary: "A pod restart was detected for application example-app"
+          description: "Check the example-app"
