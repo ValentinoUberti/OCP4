@@ -1,0 +1,4 @@
+image-registry.openshift-image-registry.svc:5000/quay-registry/golang-sample@sha256:7e4c26ce15450274b2b61f8ed2a1e465988ff57319da657e6f9d855c06565ffc
+Push successful
+
+example-registry-quay-quay-registry.apps.ocp2.lab.seeweb/testorg/demorepo

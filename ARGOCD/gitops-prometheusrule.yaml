@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: "2021-10-21T09:41:30Z"
+  generation: 1
+  managedFields:
+  - apiVersion: monitoring.coreos.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"b24ef329-51d8-4d97-9949-8da6a2320a6d"}: {}
+      f:spec:
+        .: {}
+        f:groups: {}
+    manager: manager
+    operation: Update
+    time: "2021-10-21T09:41:30Z"
+  name: gitops-operator-argocd-alerts
+  namespace: openshift-gitops
+  ownerReferences:
+  - apiVersion: argoproj.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ArgoCD
+    name: openshift-gitops
+    uid: b24ef329-51d8-4d97-9949-8da6a2320a6d
+  resourceVersion: "24751643"
+  uid: 976aa6b7-5e6a-4e45-aecc-648f0211e233
+spec:
+  groups:
+  - name: GitOpsOperatorArgoCD
+    rules:
+    - alert: ArgoCDSyncAlert
+      annotations:
+        message: ArgoCD application {{ $labels.name }} is out of sync
+      expr: argocd_app_info{namespace="openshift-gitops",sync_status="OutOfSync"} > 0
+      labels:
+        severity: warning
