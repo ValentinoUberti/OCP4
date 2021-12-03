@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test3
+  labels:
+    app: test3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test3
+  template:
+    metadata:
+      labels:
+        app: test3 
+    spec:
+      containers:
+      - name: test3
+        image: testorg/demorepo:v2
+        ports:
+        - containerPort: 8080
