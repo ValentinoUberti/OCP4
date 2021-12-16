@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars/org_example-organization-name.yaml
+  tasks:
+
+    - name: Get {{ quay_organization | mandatory }} repository list
+      uri:
+        url: "https://{{ quay_endpoint | mandatory }}/api/v1/repository?namespace={{ quay_organization | mandatory }}"
+        method: GET
+        headers:
+          accept: application/json
+          Authorization: "Bearer {{ quay_oauth_token | mandatory }}"
+        status_code:
+          - 200
+        validate_certs: "{{ quay_validate_certs | default('yes') }}"
+      register: quay_repository_list
+
+    
+    # TODO: use filters to create list of repos to delete
+
+    
+    - set_fact:
+        list1: "{{ quay_repository_list.json.repositories | map(attribute='name') | list }}"
+        list2: "{{ repositories | map(attribute='name') | list }}"
+        #myrepos: "{{ list1 | difference(list2)  }}"
+
+    - debug:
+        var: list1 | difference(list2)
+    
+
+    
+  
