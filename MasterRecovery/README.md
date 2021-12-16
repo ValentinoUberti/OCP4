@@ -1,3 +1,5 @@
+https://docs.openshift.com/container-platform/4.8/backup_and_restore/replacing-unhealthy-etcd-member.html#restore-replace-stopped-etcd-member_replacing-unhealthy-etcd-member
+
 oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
 
 oc get machines -A -ojsonpath='{range .items[*]}{@.status.nodeRef.name}{"\t"}{@.status.providerStatus.instanceState}{"\n"}' | grep -v running
@@ -7,6 +9,8 @@ oc get nodes -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{"\t"}{range .s
 oc get pods -n openshift-etcd | grep -v etcd-quorum-guard | grep etcd
 
 oc rsh -n openshift-etcd etcd-ocp-8wcjz-master-1
+
+etcdctl member list -w table
 
 +------------------+---------+--------------------+---------------------------+---------------------------+------------+
 |        ID        | STATUS  |        NAME        |        PEER ADDRS         |       CLIENT ADDRS        | IS LEARNER |
