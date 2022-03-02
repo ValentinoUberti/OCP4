@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1alpha1
+kind: ClusterSecretStore
+metadata:
+  name: example
+spec:
+  provider:
+    vault:
+      auth:
+        kubernetes:
+          mountPath: kubernetes
+          role: cloud-app
+      path: bjpath
+      server: 'https://vault.lab.seeweb:8200'
+      version: v2
+

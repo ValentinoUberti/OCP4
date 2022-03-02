@@ -1,17 +1,20 @@
-kind: ArgoCD
 apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
 metadata:
   name: argocd
-  namespace: argocd
+  namespace: openshift-gitops
+ 
 spec:
   controller:
+    processors: {}
     resources:
       limits:
-        cpu: 2000m
-        memory: 2048Mi
+        cpu: "2"
+        memory: 2Gi
       requests:
         cpu: 250m
-        memory: 1024Mi
+        memory: 1Gi
+    sharding: {}
   dex:
     openShiftOAuth: true
     resources:
@@ -21,6 +24,12 @@ spec:
       requests:
         cpu: 250m
         memory: 128Mi
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
   ha:
     enabled: false
     resources:
@@ -30,10 +39,17 @@ spec:
       requests:
         cpu: 250m
         memory: 128Mi
+  initialSSHKnownHosts: {}
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
   rbac:
-    defaultPolicy: ''
+    defaultPolicy: ""
     policy: |
-      g, system:cluster-admins, role:admin
+      g, cluster-admins, role:admin
     scopes: '[groups]'
   redis:
     resources:
@@ -46,12 +62,19 @@ spec:
   repo:
     resources:
       limits:
-        cpu: 1000m
-        memory: 1024Mi
+        cpu: "1"
+        memory: 1Gi
       requests:
         cpu: 250m
         memory: 256Mi
   server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
     resources:
       limits:
         cpu: 500m
@@ -61,3 +84,33 @@ spec:
         memory: 128Mi
     route:
       enabled: true
+    service:
+      type: ""
+  tls:
+    
+    initialCerts:
+      gitlab.lab.seeweb: |
+        -----BEGIN CERTIFICATE-----
+        MIID/jCCAmagAwIBAgIUEwQwnFYIRz90prLkUPCGyVDSnVYwDQYJKoZIhvcNAQEL
+        BQAwNTETMBEGA1UECgwKTEFCLlNFRVdFQjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUg
+        QXV0aG9yaXR5MB4XDTIyMDIxNDE1NTIzOVoXDTIzMDYyOTE1NTIzOVoweTELMAkG
+        A1UEBhMCSVQxEjAQBgNVBAgMCUxvbWJhcmRpYTEOMAwGA1UEBwwFQ3JlbWExGjAY
+        BgNVBAoMEVJpZ2hpbmkgU3VwZXIgTGFiMQ4wDAYDVQQLDAVNaXhlZDEaMBgGA1UE
+        AwwRZ2l0bGFiLmxhYi5zZWV3ZWIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+        AoIBAQDPKB9Rocr67aj1yhnilVxqiJHkZl/XpyFxCRJBhflugz0bv2sV5CwnyZ7r
+        MCzef+cWF9gsA+FFv+ll1q7Dlt/ulxTzVRkIHNmyYwO4LAwR6t+v4Zn871IrEe/o
+        LuTKT54ueQ4P3nNSJY0i02kXgbcFj9mT1SOeclQsCf4JHlgWNpgjAPfjj6tmC7/b
+        Ge2yLVk8mGLXa/ccdgt+sKG0NtcV8OoTWdyyeshTK/mJLc25f0SqKl32Wryk27Hc
+        9cUpiHosWsOhI0nPz4azcZf3y+nX2Dx0rylmyTp0hSZ1j0APi3EWuhCuWTqDM4tL
+        uGItp0qmVaEgj6T1j0J4HTIWsgF9AgMBAAGjQjBAMAsGA1UdDwQEAwIF4DATBgNV
+        HSUEDDAKBggrBgEFBQcDATAcBgNVHREEFTATghFnaXRsYWIubGFiLnNlZXdlYjAN
+        BgkqhkiG9w0BAQsFAAOCAYEAI5+Ar8u+B0fjUU8Vv8FrEsxCPQSdhwO5M52np1jj
+        uhhR/PgapFNVRSVxA0Uc+exLIhMpUnu/7Qd4N870R1AqNfELN6L1T2s/XA08hVUp
+        +hw7oiniFAXdrEVDgWhHZ5ZiD4miNZpJfC1sSvY54xmy3njWhM2aDUyEMQt18lNT
+        hqyDgk6maj21cnnJ4fj0TF4E7KOjo+D4ng6VAhU8omX19kBtypD35wAtTta6G6H5
+        juUVipSlHcssHKpxtOPntywI7od8JT8eZkzy4lMFtAN2kNlurHovUAxIBzz12GAB
+        iXfVDvjD04wNI6/q/TUAVoIUK7ALh5hjrb4zLqJEE+WvsVFf9UOPWeDYHp/dT29d
+        9YyxtcLLKFUwhV19gYMulkpAVPzwFajYPqfICas29OtlodOffi0KbCqtcleyFv+R
+        OOi47hlVeQO6RtCbn/m/8PLQeTFil+dAzpY2c/7OxS8eG7iICukKx57txfiRijM5
+        zuhAX+LI/QuPdbUkbHtCl6Oe
+        -----END CERTIFICATE-----

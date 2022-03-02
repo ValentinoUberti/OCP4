@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test2
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: maciao
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: infra
+    repoURL: https://gitlab.lab.seeweb/vale/infra.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

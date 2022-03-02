@@ -1,0 +1,99 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: openshift-gitops
+spec:
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+    service:
+      type: ''
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  initialSSHKnownHosts: {}
+  rbac: 
+    defaultPolicy: ''
+    policy: |
+      g, system:cluster-admins, role:admin
+    scopes: '[groups]'
+  repo:
+    
+    mountsatoken: true
+    resources:
+      limits:
+        cpu: '1'
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    serviceaccount: vplugin
+    version: v1.0
+  dex:
+    openShiftOAuth: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  version: v1.0
+  ha:
+    enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  tls:
+    ca: {}
+  image: quay.io/valeube/pmo-argovault
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  configManagementPlugins: |-
+    - name: argocd-vault-plugin
+      generate:
+        command: ["argocd-vault-plugin"]
+        args: ["generate", "./"]
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: '2'
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
