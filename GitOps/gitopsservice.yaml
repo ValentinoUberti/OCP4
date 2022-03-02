@@ -11,3 +11,6 @@ spec:
   - effect: NoExecute
     key: infra
     value: reserved
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/infra
+    operator: "Exists"
