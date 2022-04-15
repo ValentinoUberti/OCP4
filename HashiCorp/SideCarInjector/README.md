@@ -1,15 +1,14 @@
 oc new-project test-injector
+
 helm version (should be > 3)
+
 helm repo add hashicorp https://helm.releases.hashicorp.com
+
 helm search repo hashicorp/vault -l
+
 helm install vault hashicorp/vault --set "injector.externalVaultAddr=http://vault.lab.seeweb:8200" --set "global.openshift=true"
 
-cat <<EOF | oc create -f -
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: webapp
-EOF
+oc create sa webapp
 
 ```
 vale@fedorone HashiCorp]$ oc get sa
@@ -24,6 +23,7 @@ webapp                 2         8s
 ### On Vault Server
 
 export VAULT_ADDR=http://0.0.0.0:8200
+
 vault login
 
 vault kv put secret/devwebapp/config username='giraffe' password='salsa'
@@ -42,12 +42,12 @@ vault write auth/kubernetes/role/devweb-app \
 
 
 TOKEN_REVIEW_JWT=$(oc sa get-token vault)
+
 KUBE_CA_CERT=$(cat k8-ca.crt)
+
 KUBE_HOST="https://api.ocp3.lab.seeweb:6443"
 
 vault write auth/kubernetes/config token_reviewer_jwt="$TOKEN_REVIEW_JWT" kubernetes_host="$KUBE_HOST" kubernetes_ca_cert="$KUBE_CA_CERT" disable_local_ca_jwt=true
-
-
 
 oc create -f pod.yaml
 
