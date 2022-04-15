@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: devwebapp-with-annotations
+  labels:
+    app: devwebapp-with-annotations
+  annotations:
+    vault.hashicorp.com/agent-inject: 'true'
+    vault.hashicorp.com/role: 'devweb-app'
+    vault.hashicorp.com/agent-inject-secret-credentials.txt: 'secret/data/devwebapp/config'
+spec:
+  serviceAccountName: webapp
+  containers:
+    - name: app
+      image: burtlo/devwebapp-ruby:k8s
