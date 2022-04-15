@@ -309,7 +309,7 @@ vault write auth/kubernetes/role/devweb-app \
   ttl=24h
 
 
-TOKEN_REVIEW_SJWT=$(oc get secret  test-cloud -n test-external-secret -o go-template='{{ .data.token }}' | base64 --decode)
+TOKEN_REVIEW_JWT=$(oc get secret  test-cloud -n test-external-secret -o go-template='{{ .data.token }}' | base64 --decode)
 
 
 curl --request POST --data '{"jwt": "'$TOKEN_REVIEW_SJWT'", "role": "devweb-app"}' http://127.0.0.1:8200/v1/auth/kubernetes/login
