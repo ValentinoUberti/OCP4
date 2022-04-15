@@ -51,9 +51,11 @@ vault write auth/kubernetes/config token_reviewer_jwt="$TOKEN_REVIEW_JWT" kubern
 
 oc create -f pod.yaml
 
-# oc exec  devwebapp-with-annotations -- cat /vault/secrets/credentials.txt
+oc exec  devwebapp-with-annotations -- cat /vault/secrets/credentials.txt
 
+```
 Defaulted container "app" out of: app, vault-agent, vault-agent-init (init)
 data: map[password:salsa username:giraffe]
 metadata: map[created_time:2022-04-15T09:42:38.56489184Z custom_metadata:<nil> deletion_time: destroyed:false version:1]
+```
 
