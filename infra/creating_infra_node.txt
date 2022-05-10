@@ -26,3 +26,41 @@ spec:
 spec:
   nodeSelector:
     node-role.kubernetes.io/infra: ""
+
+
+
+
+-----------------
+
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: xxx-t7lrf
+  name: xxx-t7lrf-infra
+  namespace: openshift-machine-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: xxx-t7lrf
+      machine.openshift.io/cluster-api-machineset: xxx-t7lrf-infra
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: xxx-t7lrf
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: xxx-t7lrf-infra
+    spec:
+      lifecycleHooks: {}
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      taints:
+      - effect: NoSchedule
+        key: infra
+        value: reserved
+      - effect: NoExecute
+        key: infra
+        value: reserved
