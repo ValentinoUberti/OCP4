@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  password: Y2FzYWZ1MTE=
+  url: aHR0cHM6Ly9naXRsYWIubGFiLnNlZXdlYi92YWxl
+  username: dmFsZQ==
+kind: Secret
+metadata:
+  annotations:
+    managed-by: argocd.argoproj.io
+  
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+  
+  name: creds-2982785348
+  namespace: openshift-gitops
+  
+type: Opaque

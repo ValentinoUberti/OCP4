@@ -1,0 +1,30 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: my-lab-policies
+policyDefaults:
+  namespace: policies
+  remediationAction: enforce
+  complianceType: "musthave"
+  placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+policies:
+- name: monitoring
+  manifests:
+    - path: infra/monitoring
+- name: registry
+  manifests:
+    - path: infra/registry
+- name: identity
+  manifests:
+    - path: infra/identity-provider
+- name: groupsync
+  manifests:
+    - path: infra/group-sync/base
+- name: proxy
+  manifests:
+    - path: infra/cluster-proxy
+- name: logging
+  manifests:
+    - path: infra/logging

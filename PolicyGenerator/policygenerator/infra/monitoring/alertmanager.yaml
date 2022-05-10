@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  alertmanager.yaml: Z2xvYmFsOgogICNyZXNvbHZlX3RpbWVvdXQ6IDVtCiAgCnJlY2VpdmVyczoKICAtIG5hbWU6IHNpZ25hbGlsbwogICAgd2ViaG9va19jb25maWdzOgogICAgICAtIGh0dHBfY29uZmlnOgogICAgICAgICAgYmVhcmVyX3Rva2VuOiAnYWJjZCcKICAgICAgICB1cmw6ICdodHRwOi8vc2lnbmFsaWxvLnNpZ25hbGlsby5zdmMuY2x1c3Rlci5sb2NhbC93ZWJob29rJwogICAgICAgIHNlbmRfcmVzb2x2ZWQ6IHRydWUKcm91dGU6CiAgZ3JvdXBfYnk6CiAgICAtIG5hbWVzcGFjZQogIHJlY2VpdmVyOiBzaWduYWxpbG8KICBncm91cF9pbnRlcnZhbDogMW0KICBncm91cF93YWl0OiAzMHMKICByZXBlYXRfaW50ZXJ2YWw6IDFtCiAgcm91dGVzOiAgCiAgLSBtYXRjaDoKICAgICAgcHJvbWV0aGV1czogb3BlbnNoaWZ0LW1vbml0b3JpbmcvazhzCiAgICByZXBlYXRfaW50ZXJ2YWw6IDVtCiAgICByZWNlaXZlcjogc2lnbmFsaWxvCg==
+kind: Secret
+metadata:
+  labels:
+    alertmanager: main
+    app.kubernetes.io/component: alert-router
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/part-of: openshift-monitoring
+    app.kubernetes.io/version: 0.22.2
+  name: alertmanager-main
+  namespace: openshift-monitoring
+type: Opaque
