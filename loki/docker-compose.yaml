@@ -1,0 +1,43 @@
+version: "3"
+services:
+  loki:
+    image: grafana/loki:2.5.0
+    volumes:
+      - /root/monitoring/loki/config:/mnt/config:Z
+    ports:
+      - "3100:3100"
+    command: -config.file=/mnt/config/loki-config.yaml
+    user: loki
+    networks:
+      - loki
+
+  promtail:
+    privileged: true      
+    image: grafana/promtail:2.5.0
+    volumes:
+      - /root/monitoring/promtail/config:/mnt/config:Z
+      - /var/log:/var/log
+    command: -config.file=/mnt/config/promtail-config.yaml
+    ports:
+      - "9080:9080"
+    user: root
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - grafana-storage:/var/lib/grafana:Z
+      - /root/monitoring/grafana/data/provisioning:/etc/grafana/provisioning:Z
+    environment:
+      - GF_INSTALL_PLUGIN='grafana-simple-json-datasource'
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
+networks:
+  loki:
+
+volumes:
+  grafana-storage:

@@ -1,0 +1,17 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+  - name: remoteloki
+    type: loki
+    url: http://loki.lab.seeweb:3100
+  pipelines:
+  - inputRefs:
+    - application
+    - infrastructure
+    - audit
+    outputRefs:
+    - remoteloki

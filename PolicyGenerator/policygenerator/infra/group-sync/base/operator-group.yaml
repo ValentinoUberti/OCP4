@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: GroupSync.v1alpha1.redhatcop.redhat.io
+  name: group-sync-operator-nlzhb
+  namespace: group-sync-operator
+spec:
+  targetNamespaces:
+  - group-sync-operator

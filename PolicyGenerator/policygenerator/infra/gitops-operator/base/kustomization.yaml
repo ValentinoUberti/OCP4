@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sub.yaml
+- namespace.yaml
+- argocd-instance.yaml
+- creds-1.yaml
+- creds-2.yaml
+- infrastructure-project.yaml
+- cluster-role-binding.yaml
