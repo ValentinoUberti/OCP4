@@ -59,8 +59,8 @@ spec:
           node-role.kubernetes.io/infra: ""
       taints:
       - effect: NoSchedule
-        key: infra
+        key: node-role.kubernetes.io/infra 
         value: reserved
       - effect: NoExecute
-        key: infra
+        key: node-role.kubernetes.io/infra 
         value: reserved
