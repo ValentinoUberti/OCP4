@@ -1,0 +1,12 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: imgc-kubeconfig
+spec:
+  kubeletConfig:
+    imageGCHighThresholdPercent: 65
+    imageGCLowThresholdPercent: 60
+    imageMinimumGCAge: "5m30s"
+  machineConfigPoolSelector:
+    matchLabels:
+      pools.operator.machineconfiguration.openshift.io/worker: ""
