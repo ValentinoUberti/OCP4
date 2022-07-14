@@ -90,3 +90,9 @@ ruler:
     kvstore:
       store: inmemory
   enable_api: true  
+
+query_range:
+  split_queries_by_interval: 24h
+
+frontend:
+  max_outstanding_per_tenant: 1024

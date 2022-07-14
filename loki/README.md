@@ -4,6 +4,9 @@ server: loki.lab.seeweb
 
 blog: https://cloud.redhat.com/blog/openshift-logging-forwarding-logs-to-external-loki
 
+https://sbcode.net/grafana/logql/
+
+
 # Loki install
 
 mkdir -pv monitoring/{loki,promtail,grafana}/{data,config}
@@ -180,5 +183,79 @@ podman-compose --project-name monitoring down
 {kubernetes_pod_name="intesa-adc-operator-2c597"} | json | level=~"warn"
 
 count_over_time({log_type="application",kubernetes_namespace_name="adc"} | json | level=~"warn" [30m])
+
+sum(count_over_time({log_type="application",kubernetes_namespace_name="adc"} | json | level=~"warn" [1m])) by (kubernetes_namespace_name)
+
+sum(count_over_time({log_type="application",kubernetes_namespace_name="adc"} | json | level=~"warn" [$__range])) by (kubernetes_namespace_name)
+
 ```
+
+##
+Extract successfully ldap groups sync
+
+```
+count_over_time({log_type="application",kubernetes_namespace_name="group-sync-operator"}|~ "Sync Completed Successfully" [10m]))
+```
+
+
+# Line filter (like grep)
+
+Get all applications logs containing the word "error"
+
+```
+{log_type="application"} |= "error"
+```
+
+Get all applications logs containing the word "error" and not the word "timeout"
+```
+{log_type="application"} |= "error" != "timeout"
+```
+
+# Parser
+
+Used to parse logs to add labels
+
+- json 
+- logfmt (if there is a rfc complaint log format)
+- pattern  (for example for the ngnix controller)
+- regexp
+- unpack
+
+
+## json parser
+
+```
+{kubernetes_container_name="manager"} |= "error" | json
+```
+
+Example json from logs
+
+```
+{
+  "pod.name" : { "id": "234"},
+  "namespace: "test"
+}
+```
+
+After parsing, we can access these vars:
+
+- pod_name_id
+- namespace
+
+# Laber filter
+
+After the parsering, we can apply label filter
+
+```
+{container="frontend"} |!=error | logfmt | duration > 1m and bytes_consumed > 20MB
+
+
+
+
+
+
+
+
+
+
 
