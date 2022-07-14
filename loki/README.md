@@ -88,3 +88,97 @@ spec:
       outputRefs:
         - remoteloki
 
+```
+1  exit
+    2  mkdir -pv monitoring/{loki,promtail,grafana}/{data,config}
+    3  podman
+    4  dnf install -y podman
+    5  pip3 install podman-compose
+    6  dnf install pip3 -y
+    7  dnf install python3-pip
+    8  pip3 install podman-compose
+    9  history
+   10  tree
+   11  vi monitoring/promtail/config/promtail-config.yaml
+   12  vi monitoring/loki/config/loki-config.yaml
+   13  ll
+   14  podman-compose --project-name monitoring up -d
+   15  ll
+   16  cd monitoring/
+   17  ll
+   18  vi docker-compose.yaml
+   19  cd ..
+   20  podman-compose --project-name monitoring up -d
+   21  cd monitoring/
+   22  podman-compose --project-name monitoring up -d
+   23  podman-compose --project-name monitoring down
+   24  podman ps
+   25  podman-compose --project-name monitoring up -d
+   26  podman ps
+   27  podman ps -a
+   28  podman log 7b92854d4422
+   29  podman logs 7b92854d4422
+   30  tree
+   31  ausearch
+   32  ausearch -a storage
+   33  journalctl -xef
+   34  setsebool -P virt_qemu_ga_read_nonsecurity_files 1
+   35  podman-compose --project-name monitoring down 
+   36  podman-compose --project-name monitoring up -d
+   37  podman ps
+   38  podman ps -a
+   39  podman logs 762c8ca68c6b
+   40  tree
+   41  vi docker-compose.yaml 
+   42  podman-compose --project-name monitoring down 
+   43  podman-compose --project-name monitoring up -d
+   44  podman ps
+   45  firewall-cmd --list-all
+   46  vi /root/monitoring/grafana/data/provisioning/datasources/loki.yaml
+   47  mkdir /root/monitoring/grafana/data/provisioning/datasources
+   48  vi /root/monitoring/grafana/data/provisioning/datasources/loki.yaml
+   49  podman pod ps
+   50  podman ps
+   51  podman pods
+   52  podman pod
+   53  podman pod ps
+   54  podman pod restart monitoring
+   55  podman ps
+   56  podman restart monitoring_grafana_1
+   57  podman ps
+   58  vi /root/monitoring/grafana/data/provisioning/datasources/loki.yaml
+   59  podman restart monitoring_grafana_1
+   60  date
+   61  exit
+   62  top
+   63  df -h
+   64  treer
+   65  tree
+   66  du -h monitoring
+   67  history
+   ```
+
+
+## Activate the stack
+
+```
+cd monitoring
+podman-compose --project-name monitoring up -d
+```
+
+## Deactivate the stack
+
+```
+podman-compose --project-name monitoring down 
+```
+
+# Example query
+
+## Extract warning from logs
+
+```
+{kubernetes_pod_name="intesa-adc-operator-2c597"} | json | level=~"warn"
+
+count_over_time({log_type="application",kubernetes_namespace_name="adc"} | json | level=~"warn" [30m])
+```
+

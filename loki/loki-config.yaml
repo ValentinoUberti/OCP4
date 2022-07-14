@@ -24,8 +24,9 @@ schema_config:
       object_store: filesystem
       schema: v11
       index:
-        prefix: index_
+        prefix: loki_index
         period: 24h
+      
 
 ingester:
   wal:
@@ -43,6 +44,15 @@ ingester:
   max_chunk_age: 1h           # All chunks will be flushed when they hit this age, default is 1h
   chunk_retain_period: 30s    # Must be greater than index read cache TTL if using an index cache (Default index read cache TTL is 5m)
   max_transfer_retries: 0     # Chunk transfers disabled
+
+
+compactor:
+  working_directory: /data/retention
+  shared_store: filesystem
+  compaction_interval: 10m
+  retention_enabled: true
+  retention_delete_delay: 2h
+  retention_delete_worker_count: 150
 
 storage_config:
   boltdb_shipper:
