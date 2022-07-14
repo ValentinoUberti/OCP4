@@ -38,22 +38,6 @@
             "color": {
               "mode": "thresholds"
             },
-            "custom": {
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "axisSoftMin": 0,
-              "fillOpacity": 16,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineWidth": 1,
-              "scaleDistribution": {
-                "type": "linear"
-              }
-            },
             "mappings": [],
             "thresholds": {
               "mode": "absolute",
@@ -80,23 +64,16 @@
         },
         "id": 1,
         "options": {
-          "barRadius": 0,
-          "barWidth": 0,
-          "groupWidth": 0,
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom"
-          },
           "orientation": "auto",
-          "showValue": "auto",
-          "stacking": "none",
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          "xTickLabelRotation": 0,
-          "xTickLabelSpacing": 200
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
         },
         "pluginVersion": "8.5.2",
         "targets": [
@@ -105,13 +82,140 @@
               "type": "loki",
               "uid": "P8E80F9AEF21F6940"
             },
-            "expr": "count_over_time({log_type=\"application\",kubernetes_namespace_name=\"adc\"} | json | level=~\"warn\" [30m])",
+            "expr": "sum(count_over_time({log_type=\"application\",kubernetes_namespace_name=\"adc\"} | json | level=~\"warn\" [$__range])) by (kubernetes_namespace_name)",
             "key": "Q-5e5e73e9-c4f9-4700-b10d-799b9094869c-0",
             "refId": "A"
           }
         ],
-        "title": "Log with warning",
-        "type": "barchart"
+        "title": "Logs with warning, adc namespace",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "8.5.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P8E80F9AEF21F6940"
+            },
+            "expr": "sum(count_over_time({log_type=\"application\",kubernetes_namespace_name=\"group-sync-operator\"}|~ \"Sync Completed Successfully\" [$__range]))",
+            "refId": "A"
+          }
+        ],
+        "title": "Successfully Ldap group sync",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 6,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": false,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "targets": [
+          {
+            "expr": "{kubernetes_container_name=\"manager\"} | json | level=~\"error\"",
+            "key": "Q-e45e0284-7633-4b49-a60c-1a66f4b5ee3d-0",
+            "refId": "A"
+          }
+        ],
+        "title": "Error from all controllers",
+        "type": "logs"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 8,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": false,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "P8E80F9AEF21F6940"
+            },
+            "expr": "{log_type=\"application\",kubernetes_namespace_name=\"group-sync-operator\"}|~ \"Sync Completed Successfully\"",
+            "refId": "A"
+          }
+        ],
+        "title": "Group Sync Logs",
+        "type": "logs"
       }
     ],
     "schemaVersion": 36,
@@ -121,13 +225,13 @@
       "list": []
     },
     "time": {
-      "from": "now-6h",
+      "from": "now-1h",
       "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Logs with warnings",
     "uid": "g5xekzg4z",
-    "version": 1,
+    "version": 2,
     "weekStart": ""
   }
