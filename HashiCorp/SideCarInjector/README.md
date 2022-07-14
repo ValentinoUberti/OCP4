@@ -1,3 +1,9 @@
+# Authentication process
+
+https://cloud.redhat.com/blog/vault-integration-using-kubernetes-authentication-method
+
+
+
 oc new-project test-injector
 
 helm version (should be > 3)
@@ -41,7 +47,26 @@ vault write auth/kubernetes/role/devweb-app \
         ttl=24h
 
 
-TOKEN_REVIEW_JWT=$(oc sa get-token vault)
+
+Create a token reviewer service account called vault-auth in the test-injector project
+
+```oc create sa vault-auth```
+
+Give the vault-auth service account permissions to create tokenreviews.authentication.k8s.io at the cluster scope
+
+```oc adm policy add-cluster-role-to-user system:auth-delegator system:serviceaccount:test-injector:vault-auth```
+
+
+
+
+From the Vault server, login to OCP and switch to the test-injector project
+
+Extract the Kube Ca Cert
+
+```KUBE_CA_CERT=$(kubectl config view --raw --minify --flatten --output='jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)```
+
+
+TOKEN_REVIEW_JWT=$(oc sa get-token vault-auth)
 
 KUBE_CA_CERT=$(cat k8-ca.crt)
 
