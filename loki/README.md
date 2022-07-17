@@ -5,6 +5,7 @@ server: loki.lab.seeweb
 ## blog: 
 
 https://cloud.redhat.com/blog/openshift-logging-forwarding-logs-to-external-loki
+
 https://sbcode.net/grafana/logql/
 
 ## Loki install on external VM (Fedora 36) using podman-compose
