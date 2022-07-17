@@ -91,8 +91,9 @@ ruler:
       store: inmemory
   enable_api: true  
 
-query_range:
+limits_config:
   split_queries_by_interval: 24h
 
 frontend:
   max_outstanding_per_tenant: 1024
+  compress_responses: true

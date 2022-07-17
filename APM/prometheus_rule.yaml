@@ -3,7 +3,6 @@ kind: PrometheusRule
 metadata:
   name: example-alert
   namespace: ns1
-  
 spec:
   groups:
   - name: example
@@ -14,7 +13,7 @@ spec:
         application: example-app
         severity: critical
       annotations:
-          prefix: "Restart detected"
-          summary: "A pod restart was detected for application example-app"
-          description: "Check the example-app"
-          message: "My message for plugin output used by signalilo"
+        prefix: "Restart detected"
+        summary: "A pod restart was detected for application example-app"
+        description: "Check the example-app"
+        message: "My message for plugin output used by signalilo"
