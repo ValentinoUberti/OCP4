@@ -155,5 +155,9 @@ After the parsering, we can apply label filter
 ```
 {container="frontend"} |!=error | logfmt | duration > 1m and bytes_consumed > 20MB
 
+```
 
+# Example Dashboard
+
+<img src="./images/Screenshot from 2022-07-17 19-42-09.png">
 
