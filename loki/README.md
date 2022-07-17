@@ -7,28 +7,30 @@ server: loki.lab.seeweb
 https://cloud.redhat.com/blog/openshift-logging-forwarding-logs-to-external-loki
 https://sbcode.net/grafana/logql/
 
-# Loki install on external VM
+## Loki install on external VM (Fedora 36) using podman-compose
 
+```
 mkdir -pv monitoring/{loki,promtail,grafana}/{data,config}
-mkdir -pv /root/monitoring/grafana/data/provisioning/datasources
-dnf install -y podman python3-pip
+mkdir -pv monitoring/grafana/data/provisiong/datasources
+dnf install -y podman
+dnf install python3-pip
 pip3 install podman-compose
-scp promtail-config-yaml  loki.lab.seeweb:/monitoring/promtail/config/promtail-config.yaml
-
-```
-apiVersion: 1
-datasources:
- - name: Loki
-   type: loki
-   access: proxy
-   orgId: 1
-   url: http://loki-server:3100
-   isDefault: true
-   version: 1
-   editable: true
+cd monitoring/
+setsebool -P virt_qemu_ga_read_nonsecurity_files 1
 ```
 
-## ClusterLogging
+## Edit and copy configuration yamls
+
+```
+cp promtail-config-yaml  monitoring/promtail/config/promtail-config.yaml
+cp loki-config.yaml      monitoring/loki/config/loki-config.yaml
+cp loki.yaml             monitoring/grafana/data/provisiong/datasources/loki.yaml
+```
+
+
+## Install the OpenShift Logging Operator
+
+## Create the ClusterLogging CR on OpenShift
 ```
 apiVersion: "logging.openshift.io/v1"
 kind: "ClusterLogging"
@@ -43,7 +45,7 @@ spec:
       fluentd: {}
 ```
 
-## ClusterLogForwarder
+## Create the ClusterLogForwarder CR on OpenShift
 
 ```
 apiVersion: logging.openshift.io/v1
@@ -65,14 +67,8 @@ spec:
         - remoteloki
 
 ```
-mkdir -pv monitoring/{loki,promtail,grafana}/{data,config}
-dnf install -y podman
-dnf install python3-pip
-pip3 install podman-compose
-cd monitoring/
-setsebool -P virt_qemu_ga_read_nonsecurity_files 1
 
-## Activate the stack
+## Activate the stack on the loki server
 
 ```
 cd monitoring
@@ -158,11 +154,6 @@ After the parsering, we can apply label filter
 
 ```
 {container="frontend"} |!=error | logfmt | duration > 1m and bytes_consumed > 20MB
-
-
-
-
-
 
 
 
