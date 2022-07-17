@@ -18,6 +18,15 @@ spec:
       - image: quay.io/brancz/prometheus-example-app:v0.2.0
         imagePullPolicy: IfNotPresent
         name: prometheus-example-app
+        livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 2
 ---
 apiVersion: v1
 kind: Service

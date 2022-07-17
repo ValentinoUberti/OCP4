@@ -8,7 +8,7 @@ spec:
   groups:
   - name: example
     rules:
-    - alert: Restart detected
+    - alert: RestartDetected
       expr: increase(kube_pod_container_status_restarts_total{pod=~".*example-app.*"}[1h]) > 0
       labels:
         application: example-app
@@ -17,3 +17,4 @@ spec:
           prefix: "Restart detected"
           summary: "A pod restart was detected for application example-app"
           description: "Check the example-app"
+          message: "My message for plugin output used by signalilo"
