@@ -1,0 +1,17 @@
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  annotations:
+    openshift.io/sa.scc.mcs: s0:c29,c14
+    openshift.io/sa.scc.supplemental-groups: 1000840000/10000
+    openshift.io/sa.scc.uid-range: 1000840000/10000
+  labels:
+    kubernetes.io/metadata.name: ansible-automation-platform
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/audit-version: v1.24
+    pod-security.kubernetes.io/warn: baseline
+    pod-security.kubernetes.io/warn-version: v1.24
+  name: ansible-automation-platform
+spec:
+  finalizers:
+  - kubernetes
