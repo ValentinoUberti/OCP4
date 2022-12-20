@@ -75,3 +75,16 @@ A collection of policies that are tailored to achieving a singolat high-level go
 - az vm list --query '[].{name:name, resorceGroup:resourceGroup, tags:tags}' -o json
 - az network vnet list --query '[].{name:name, resorceGroup:resourceGroup, tags:tags}' -o json
 
+# Locks
+- allow you to override permissions to resources
+- apply to subscriptions, resouce groups or resources.
+- Lock restrictions apply to all users and roles.
+
+- ReadOnly Lock
+- CanNotDelete Lock
+
+- Moving Resources
+  - Between resource groups
+  - Between subscriptions
+
+# Costs
