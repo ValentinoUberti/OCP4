@@ -1,0 +1,263 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-ca-bundle
+  namespace: openshift-gitops
+  labels:
+    config.openshift.io/inject-trusted-cabundle: "true"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: openshift-gitops
+spec:
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: "4"
+        memory: 4Gi
+      requests:
+        cpu: "1"
+        memory: 2Gi
+    sharding:
+      enabled: true
+      replicas: 2
+  dex:
+    openShiftOAuth: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  ha:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  initialSSHKnownHosts: {}
+  applicationSet: {}
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  rbac:
+    defaultPolicy: ""
+    policy: |
+      g, cluster-ocp-gestione-trento-01-ruolo-cluster-admin, role:admin
+      g, system:cluster-admins, role:admin
+    scopes: '[groups]'
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  repo:
+    env:
+      - name: SSL_CERT_DIR
+        value: /tmp/sslcertdir
+    volumeMounts:
+      - name: ssl
+        mountPath: /tmp/sslcertdir
+    volumes:
+      - name: ssl
+        configMap:
+          name: user-ca-bundle
+    resources:
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    insecure: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
+    service:
+      type: ""
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cbm-infra-applications
+  namespace: openshift-gitops
+spec:
+  description: Progetto per gestire le CR lato Infra delle applicazioni CBM
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cbm-developer-applications
+  namespace: openshift-gitops
+spec:
+  description: Progetto per consentire agli sviluppatori della CBM di poter definire
+    dell CR specifiche delle applicazioni da loro sviluppate.
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  namespaceResourceWhitelist:
+  - group: apps
+    kind: Deployment
+  - group: ""
+    kind: Service
+  - group: ""
+    kind: ConfigMap
+  - group: apps
+    kind: ReplicaSet
+  - group: ""
+    kind: Pod
+  - group: ""
+    kind: ServiceAccount
+  - group: networking.istio.io
+    kind: VirtualService
+  - group: security.istio.io
+    kind: AuthorizationPolicy
+  - group: ""
+    kind: Secret
+  - group: external-secrets.io
+    kind: ExternalSecret
+  sourceRepos:
+  - '*'
+---
+apiVersion: pipelines.openshift.io/v1alpha1
+kind: GitopsService
+metadata:
+  name: cluster
+spec:
+  runOnInfra: true
+  tolerations:
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
+    - key: node-role.kubernetes.io/infra
+      effect: NoExecute
+      operator: Exists
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: helm-fluentd-forwarder
+  namespace: openshift-gitops
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-secret-puller
+  namespace: openshift-gitops
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: repo-helm-charts-external-secrets
+  namespace: openshift-gitops
+spec:
+  secretStoreRef:
+    name: vault-allitude-ocp
+    kind: ClusterSecretStore
+  target:
+    name: vault-repo-helm-charts
+    template:
+      metadata:
+        annotations:
+          managed-by: argocd.argoproj.io
+        labels:
+          argocd.argoproj.io/secret-type: repo-creds
+  dataFrom:
+  - extract:
+      key: gestione-trento-01/openshift-gitops/credentials-helm-charts
+      decodingStrategy: None
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: repo-cred-template-k8s-external-secrets
+  namespace: openshift-gitops
+spec:
+  secretStoreRef:
+    name: vault-allitude-ocp
+    kind: ClusterSecretStore
+  target:
+    name: vault-repository-credential-template-gitlab-k8s-resources
+    template:
+      metadata:
+        annotations:
+          managed-by: argocd.argoproj.io
+        labels:
+          argocd.argoproj.io/secret-type: repo-creds
+  dataFrom:
+  - extract:
+      key: gestione-trento-01/openshift-gitops/credentials-template-k8s
+      decodingStrategy: None
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: sysdig
+  namespace: openshift-gitops
+spec:
+  description: Progetto per l'installazione di Sysdig
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
